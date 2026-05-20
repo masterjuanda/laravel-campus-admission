@@ -3,20 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pendaftar; // Pastikan model di-import
+use App\Models\Pendaftar;
+use App\Models\Saran;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
-        // 1. Hitung total pendaftar dari database
-        $totalPendaftar = Pendaftar::count();
+        $totalPendaftar = \App\Models\pendaftar::count();
+        $view = $request->query('view');
 
-        // 2. Ambil 5 data pendaftar terbaru untuk ditampilkan di tabel
-        $pendaftarTerbaru = Pendaftar::latest()->take(5)->get();
+        // Jika view adalah pendaftaran, ambil semua data pendaftar
+        $semuaPendaftar = ($view == 'pendaftaran') ? \App\Models\pendaftar::all() : collect();
 
-        // 3. Kirim data ke view
-        return view('layouts.admin', compact('totalPendaftar', 'pendaftarTerbaru'));
+        return view('layouts.admin', compact('totalPendaftar', 'semuaPendaftar', 'view'));
+    }
+    public function dataSaran()
+    {
+        $semuaSaran = Saran::latest()->get();
+        return view('admin.data-saran', compact('semuaSaran'));
     }
 }

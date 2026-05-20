@@ -202,7 +202,10 @@
                 <nav class="nav-menu">
                     <ul>
                         <li class="active"><a href="{{ route('admin.dashboard') }}">📊 Dashboard</a></li>
-                        <li><a href="#">📄 Data Pendaftar</a></li>
+                        <li class="{{ $view == 'pendaftaran' ? 'active' : '' }}">
+                            <a href="{{ route('admin.dashboard', ['view' => 'pendaftaran']) }}">📄 Data Pendaftaran</a>
+                        </li>
+                        <li><a href="{{ route('admin.saran') }}">💬 Data Saran</a></li>
                         <li><a href="#">🎓 Calon Mahasiswa</a></li>
                         <li><a href="#">⚙️ Pengaturan</a></li>
                     </ul>
@@ -231,25 +234,56 @@
                         <p>Panel kendali admin untuk manajemen pendaftaran mahasiswa baru.</p>
                     </div>
 
-                    <div class="stats-container">
-                        <div class="stat-card">
-                            <span class="stat-label">Total Pendaftar</span>
-                            <span class="stat-value">{{ $totalPendaftar }}</span>
-                        </div>
-
-                        <div class="stat-card">
-                            <span class="stat-label">Tahun Akademik</span>
-                            <span class="stat-value">2026/2027</span>
-                        </div>
-
-                        <div class="stat-card">
-                            <span class="stat-label">Status Server</span>
-                            <div>
-                                <span class="stat-value">Aktif</span>
-                                <span class="badge-online">Online</span>
+                    @if ($view == 'pendaftaran')
+                        {{-- TAMPILAN TABEL DATA PENDAFTARAN --}}
+                        <div class="table-card"
+                            style="background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                            <h3 style="margin-bottom: 15px;">Daftar Seluruh Pendaftar</h3>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <thead>
+                                        <tr style="background: #f8fafc; border-bottom: 2px solid #e2e8f0;">
+                                            <th style="padding: 12px; text-align: left;">Nama</th>
+                                            <th style="padding: 12px; text-align: left;">Email</th>
+                                            <th style="padding: 12px; text-align: left;">Prodi</th>
+                                            <th style="padding: 12px; text-align: left;">Alamat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($semuaPendaftar as $p)
+                                            <tr style="border-bottom: 1px solid #f1f5f9;">
+                                                <td style="padding: 12px;">{{ $p->namalengkap }}</td>
+                                                <td style="padding: 12px;">{{ $p->email }}</td>
+                                                <td style="padding: 12px;">{{ $p->namaprodi }}</td>
+                                                <td style="padding: 12px;">{{ $p->alamat }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </div>
+                    @else
+                        {{-- TAMPILAN DASHBOARD BIASA --}}
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <span class="stat-label">Total Pendaftar</span>
+                                <span class="stat-value">{{ $totalPendaftar }}</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-label">Tahun Akademik</span>
+                                <span class="stat-value">2026/2027</span>
+                            </div>
+
+                            <div class="stat-card">
+                                <span class="stat-label">Status Server</span>
+                                <div>
+                                    <span class="stat-value">Aktif</span>
+                                    <span class="badge-online">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </section>
             </main>
         </div>

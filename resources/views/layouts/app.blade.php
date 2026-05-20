@@ -52,6 +52,12 @@
                         Kontak
                     </a>
                 </li>
+                <li>
+                    <a href="javascript:void(0)" data-menu="saran" class="nav-link-spa"
+                        onclick="tampilKonten('saran', this)">
+                        Saran
+                    </a>
+                </li>
 
                 {{-- 🔥 BAGIAN LOGIN / AUTH --}}
                 @auth
@@ -66,7 +72,7 @@
                     </li>
                 @else
                     <li>
-                        <a href="{{ route('login') }}" class="text-white me-2">
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-sm">
                             Login
                         </a>
                     </li>
@@ -104,6 +110,10 @@
 
         <div id="konten-kontak" class="konten-spa" style="display:none;">
             @include('konten.kontak')
+        </div>
+        
+        <div id="konten-saran" class="konten-spa" style="display:none;">
+            @include('konten.saran')
         </div>
 
     </main>
@@ -164,20 +174,6 @@
             }
         }
     </script>
-
-    {{-- <script>
-        function tampilKonten(nama) {
-            const semuaKonten = document.querySelectorAll('.konten-spa');
-            semuaKonten.forEach(k => k.style.display = 'none');
-            const target = document.getElementById('konten-' + nama);
-            if (target) {
-                target.style.display = 'block';
-                target.scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        }
-    </script> --}}
 
 
 

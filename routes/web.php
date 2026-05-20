@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KampusController;
+use App\Http\Controllers\SaranController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('layouts.app', [
@@ -11,8 +13,8 @@ Route::get('/', function () {
 });
 
 Route::post('/proses-pendaftaran', [KampusController::class, 'proses'])->name('proses.pendaftaran');
+Route::post('/kirim-saran', [SaranController::class, 'kirim'])->name('kirim.saran');
 
-use App\Http\Controllers\AuthController;
 
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -27,5 +29,6 @@ use App\Http\Controllers\AdminController;
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/pendaftaran', [AdminController::class, 'pendaftaran'])->name('admin.pendaftaran');
+    Route::get('/admin/saran', [AdminController::class, 'dataSaran'])->name('admin.saran');
     // Tambahkan route admin lainnya di sini
 });
